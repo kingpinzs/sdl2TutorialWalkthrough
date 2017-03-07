@@ -62,6 +62,14 @@ int main(int argc, char **argv)
 					}
 				}
 			}
+			/* For tutorial 5
+			SDL_Rect stretchRect;
+			stretchRect.x = 0;
+			stretchRect.y = 0;
+			stretchRect.w = SCREEN_WIDTH/2;
+			stretchRect.h = SCREEN_HEIGHT/2;
+			SDL_BlitScaled(currentSurface, NULL, screenSurface, &stretchRect);
+			*/
 			SDL_BlitSurface(currentSurface, NULL, screenSurface, NULL);
 		    SDL_UpdateWindowSurface(window);
 		}
@@ -104,11 +112,19 @@ void close()
 
 SDL_Surface* loadSurface( std::string path)
 {
+	SDL_Surface* optimizedSurface = NULL;
+	
 	SDL_Surface* loadedSurface = SDL_LoadBMP(path.c_str());
 	if (loadedSurface == NULL){
 		printErrors("Unable to load image");
 	}
-	return loadedSurface;
+	optimizedSurface = SDL_ConvertSurface(loadedSurface, screenSurface->format, 0);
+	if(optimizedSurface == NULL) {
+		printErrors("Unable to optimize image");
+	}
+	SDL_FreeSurface(loadedSurface);
+	
+	return optimizedSurface;
 }
 
 bool loadMedia()

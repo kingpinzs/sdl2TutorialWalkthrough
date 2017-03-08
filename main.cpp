@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -14,6 +17,9 @@ SDL_Surface* screenSurface = NULL;
 SDL_Surface* currentSurface = NULL;
 
 SDL_Event sdlEvent;
+
+SDL_Renderer* renderer = NULL;
+SDL_Texture* texture = NULL;
 
 enum KeyPressSurfaces
 {
@@ -30,6 +36,7 @@ bool loadMedia();
 void close();
 
 SDL_Surface* loadSurface( std::string path);
+SDL_Texture* loadTexture( std::string path);
 SDL_Surface* keyPressSurface[ KEY_PRESS_SURFACE_TOTAL ];
 
 void printErrors(std::string message);
@@ -70,8 +77,11 @@ int main(int argc, char **argv)
 			stretchRect.h = SCREEN_HEIGHT/2;
 			SDL_BlitScaled(currentSurface, NULL, screenSurface, &stretchRect);
 			*/
-			SDL_BlitSurface(currentSurface, NULL, screenSurface, NULL);
-		    SDL_UpdateWindowSurface(window);
+			//SDL_BlitSurface(currentSurface, NULL, screenSurface, NULL);
+		    //SDL_UpdateWindowSurface(window);
+			SDL_RenderClear(renderer);
+			SDL_RenderCopy(renderer, texture, NULL, NULL);
+			SDL_RenderPresent(renderer);
 		}
 	}
 
@@ -86,11 +96,22 @@ bool init()
 		return FAILED;
 	}
 
-	window = SDL_CreateWindow("SDL Tutorial 2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("SDL Tutorial X", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
 	if(window != NULL) {
-		screenSurface = SDL_GetWindowSurface(window);
-		return SUCCESS;
+		//screenSurface = SDL_GetWindowSurface(window);
+		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+		if(renderer != NULL) {
+			SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+			int imgFlags = IMG_INIT_PNG;
+			if(IMG_Init(imgFlags) & imgFlags) {
+				return SUCCESS;
+			}
+			printErrors("SDL_image could not initialize");
+			return FAILED;
+		}
+		printErrors("Renderer could not be created!");
+		return FAILED;
 	}
 
 	printErrors("Failed to initialize!\nWindow could not be created!");
@@ -99,14 +120,22 @@ bool init()
 
 void close()
 {
+	/* for clear the surfaces
 	for(int i = 0; i < KEY_PRESS_SURFACE_TOTAL; i++) {
 		SDL_FreeSurface(keyPressSurface[i]);
 		keyPressSurface[i] = NULL;
-	}
+	}*/
+	SDL_DestroyTexture(texture);
+	texture = NULL;
+	
 
+	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	window = NULL;
-
+	renderer = NULL;
+    
+	
+	IMG_Quit();
 	SDL_Quit();
 }
 
@@ -127,7 +156,7 @@ SDL_Surface* loadSurface( std::string path)
 	return optimizedSurface;
 }
 
-bool loadMedia()
+bool loadSurface()
 {
 	std::string images[] = {"image1.bmp", "image2.bmp", "image3.bmp", "image4.bmp", "image5.bmp"};
 	for(int i = KEY_PRESS_SURFACE_DEFAULT; i != KEY_PRESS_SURFACE_TOTAL; i++) {
@@ -140,9 +169,35 @@ bool loadMedia()
 	return SUCCESS;
 }
 
+bool loadMedia()
+{
+	texture = loadTexture("texture.png");
+	if(texture != NULL)
+	{
+		return SUCCESS;
+	}
+	printErrors("Failed to load texture image!");
+	return FAILED;
+}
+
+SDL_Texture* loadTexture(std::string path)
+{
+	SDL_Texture* newTexture = NULL;
+	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+	if (loadedSurface != NULL) {
+		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+		if(newTexture == NULL) {
+			printErrors("Unable to create texture");	
+		}
+		SDL_FreeSurface(loadedSurface);
+	} else {
+		printErrors("unable to load image");
+	}
+	return newTexture;
+}
+
 void printErrors(std::string message)
 {
 	message = message + " SDL_Error: %s\n";
-	//strcat(message, "SDL_Error: %s\n");
 	printf(message.c_str(), SDL_GetError());
 }

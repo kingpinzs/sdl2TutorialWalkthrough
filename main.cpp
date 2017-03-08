@@ -180,22 +180,6 @@ bool loadMedia()
 	return FAILED;
 }
 
-SDL_Texture* loadTexture(std::string path)
-{
-	SDL_Texture* newTexture = NULL;
-	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-	if (loadedSurface != NULL) {
-		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-		if(newTexture == NULL) {
-			printErrors("Unable to create texture");	
-		}
-		SDL_FreeSurface(loadedSurface);
-	} else {
-		printErrors("unable to load image");
-	}
-	return newTexture;
-}
-
 void printErrors(std::string message)
 {
 	message = message + " SDL_Error: %s\n";

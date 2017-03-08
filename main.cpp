@@ -4,6 +4,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
+#include "LTexture.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -32,7 +33,7 @@ enum KeyPressSurfaces
 };
 
 bool init();
-bool loadMedia();
+bool loadMedia(SDL_Renderer *renderer);
 void close();
 
 SDL_Surface* loadSurface( std::string path);
@@ -41,46 +42,23 @@ SDL_Surface* keyPressSurface[ KEY_PRESS_SURFACE_TOTAL ];
 
 void printErrors(std::string message);
 
+LTexture fooTexture;
+LTexture bckgrndTexture;
+
 int main(int argc, char **argv)
 {
-	if(init() && loadMedia()) {
+	if(init() && loadMedia(renderer)) {
 		currentSurface = keyPressSurface[ KEY_PRESS_SURFACE_DEFAULT ];
 		while(!QUIT) {
 			while(SDL_PollEvent( &sdlEvent ) != 0) {
 				if(sdlEvent.type == SDL_QUIT) {
 					QUIT = true;
-				} else if(sdlEvent.type == SDL_KEYDOWN) {
-					switch(sdlEvent.key.keysym.sym) {
-						case SDLK_UP:
-						currentSurface = keyPressSurface[ KEY_PRESS_SURFACE_UP ];
-						break;
-						case SDLK_DOWN:
-						currentSurface = keyPressSurface[ KEY_PRESS_SURFACE_DOWN ];
-						break;
-						case SDLK_LEFT:
-						currentSurface = keyPressSurface[ KEY_PRESS_SURFACE_LEFT ];
-						break;
-						case SDLK_RIGHT:
-						currentSurface = keyPressSurface[ KEY_PRESS_SURFACE_RIGHT ];
-						break;
-						default:
-						currentSurface = keyPressSurface[ KEY_PRESS_SURFACE_DEFAULT ];
-						break;
-					}
-				}
+				} 
 			}
-			/* For tutorial 5
-			SDL_Rect stretchRect;
-			stretchRect.x = 0;
-			stretchRect.y = 0;
-			stretchRect.w = SCREEN_WIDTH/2;
-			stretchRect.h = SCREEN_HEIGHT/2;
-			SDL_BlitScaled(currentSurface, NULL, screenSurface, &stretchRect);
-			*/
-			//SDL_BlitSurface(currentSurface, NULL, screenSurface, NULL);
-		    //SDL_UpdateWindowSurface(window);
+
+            SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 			SDL_RenderClear(renderer);
-			SDL_RenderCopy(renderer, texture, NULL, NULL);
+			fooTexture.render(0,0,renderer);
 			SDL_RenderPresent(renderer);
 		}
 	}
@@ -125,15 +103,12 @@ void close()
 		SDL_FreeSurface(keyPressSurface[i]);
 		keyPressSurface[i] = NULL;
 	}*/
-	SDL_DestroyTexture(texture);
-	texture = NULL;
-	
+    fooTexture.free();
 
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	window = NULL;
 	renderer = NULL;
-    
 	
 	IMG_Quit();
 	SDL_Quit();
@@ -169,10 +144,9 @@ bool loadSurface()
 	return SUCCESS;
 }
 
-bool loadMedia()
+bool loadMedia(SDL_Renderer *renderer)
 {
-	texture = loadTexture("texture.png");
-	if(texture != NULL)
+	if(fooTexture.loadFromFile("texture.png", renderer))
 	{
 		return SUCCESS;
 	}
@@ -185,3 +159,5 @@ void printErrors(std::string message)
 	message = message + " SDL_Error: %s\n";
 	printf(message.c_str(), SDL_GetError());
 }
+
+//TODO: need to finish tutorial 10

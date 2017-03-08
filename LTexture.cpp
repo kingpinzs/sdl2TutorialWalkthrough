@@ -21,7 +21,7 @@ bool LTexture::loadFromFile( std::string path, SDL_Renderer *renderer )
 		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
 		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		if(newTexture == NULL) {
-			printErrors("Unable to create texture");	
+			printErrors("Unable to create texture");
 		} else {
 			mWidth = loadedSurface->w;
 			mHeight = loadedSurface->h;
@@ -62,12 +62,12 @@ void LTexture::setAlpha( Uint8 alpha)
 void LTexture::render(int x, int y, SDL_Renderer *renderer, SDL_Rect* clip)
 {
 	SDL_Rect renderQuad = {x, y, mWidth, mHeight};
-	
+
 	if(clip != NULL) {
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
 	}
-	
+
 	SDL_RenderCopy(renderer, mTexture, NULL, &renderQuad);
 }
 

@@ -22,14 +22,13 @@ SDL_Event sdlEvent;
 SDL_Renderer* renderer = NULL;
 SDL_Texture* texture = NULL;
 
-enum KeyPressSurfaces
-{
-	KEY_PRESS_SURFACE_DEFAULT,
-	KEY_PRESS_SURFACE_UP,
-	KEY_PRESS_SURFACE_DOWN,
-	KEY_PRESS_SURFACE_LEFT,
-	KEY_PRESS_SURFACE_RIGHT,
-	KEY_PRESS_SURFACE_TOTAL
+enum KeyPressSurfaces {
+    KEY_PRESS_SURFACE_DEFAULT,
+    KEY_PRESS_SURFACE_UP,
+    KEY_PRESS_SURFACE_DOWN,
+    KEY_PRESS_SURFACE_LEFT,
+    KEY_PRESS_SURFACE_RIGHT,
+    KEY_PRESS_SURFACE_TOTAL
 };
 
 bool init();
@@ -53,10 +52,10 @@ int main(int argc, char **argv)
 			while(SDL_PollEvent( &sdlEvent ) != 0) {
 				if(sdlEvent.type == SDL_QUIT) {
 					QUIT = true;
-				} 
+				}
 			}
 
-            SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+			SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 			SDL_RenderClear(renderer);
 			fooTexture.render(0,0,renderer);
 			SDL_RenderPresent(renderer);
@@ -103,13 +102,13 @@ void close()
 		SDL_FreeSurface(keyPressSurface[i]);
 		keyPressSurface[i] = NULL;
 	}*/
-    fooTexture.free();
+	fooTexture.free();
 
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	window = NULL;
 	renderer = NULL;
-	
+
 	IMG_Quit();
 	SDL_Quit();
 }
@@ -117,9 +116,9 @@ void close()
 SDL_Surface* loadSurface( std::string path)
 {
 	SDL_Surface* optimizedSurface = NULL;
-	
+
 	SDL_Surface* loadedSurface = SDL_LoadBMP(path.c_str());
-	if (loadedSurface == NULL){
+	if (loadedSurface == NULL) {
 		printErrors("Unable to load image");
 	}
 	optimizedSurface = SDL_ConvertSurface(loadedSurface, screenSurface->format, 0);
@@ -127,7 +126,7 @@ SDL_Surface* loadSurface( std::string path)
 		printErrors("Unable to optimize image");
 	}
 	SDL_FreeSurface(loadedSurface);
-	
+
 	return optimizedSurface;
 }
 
@@ -146,8 +145,7 @@ bool loadSurface()
 
 bool loadMedia(SDL_Renderer *renderer)
 {
-	if(fooTexture.loadFromFile("texture.png", renderer))
-	{
+	if(fooTexture.loadFromFile("texture.png", renderer)) {
 		return SUCCESS;
 	}
 	printErrors("Failed to load texture image!");

@@ -159,5 +159,3 @@ void printErrors(std::string message)
 	message = message + " SDL_Error: %s\n";
 	printf(message.c_str(), SDL_GetError());
 }
-
-//TODO: need to finish tutorial 10

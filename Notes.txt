@@ -1,0 +1,62 @@
+main game loop -> game architecture
+texture manager
+animation manager
+particle manager
+collition manager
+Event manager
+vector class
+input manager
+audio manager
+
+
+game clones to start with
+Pong = Simple: input, physics, collision detection, sound; scoring
+Worm = Placement of random powerups, handling of screen boundaries, worm data structure
+Breakout = Lessons of pong, powerups, maps (brick arrangements)
+Missile Command = targeting; simple enemy ai, movement, and sound
+Space Invaders = simple movement for player and enemy, very similar to breakout with the exception that the enemy constantly moves downward, simple sound
+Asteroids = asteroids (enemies) and player can move in all directions, asteroids appear and move randomly, simple sound
+Tetris = block design, clearing the lines, scoring, simple animation
+Pac Man = simple animation, input, collision detection, maps (level design), ai
+Ikari Warriors = top down view, enemy ai, powerups, scoring, collision detection, maps (level design), input, sound, boss ai
+Super Mario Bros = lessons of Ikari Warriors (except with side-view instead of top-down view), acceleration, jumping, platforms
+
+game loop / 30fps or faster / no loading screen (use streaming method) / asset streaming
+----------
+input
+update/render
+sound prep
+sound output
+
+GOALS
+-----
+overworld map
+dungens
+stuff is movable on map
+smooth tile map rendering
+spacialy consistant
+no deminsion limits
+genrate worlds/load maps
+Rich Combinatoric interactions
+Hot Loading
+interact will all objects
+
+
+project state space (exploer and lock)
+-------------------
+Day 0. Get SDl working
+Day 1. Load texture
+Day 2. Figure out the game architecture to use -> this is not really nesicary tell after the game gets started
+Day 3. Tile map -> load a tile map from file created by tiled the map editor
+DAY 3.5 Animated charecter
+Day 3.5.5 Objects
+Day 3.6 Animated enemy 
+Day 3.7 collistion detection
+Day 4. procedural map creation
+Ship Day.
+
+
+
+texture manager 
+load an image
+Should sprite manager be part of this class or a seprate class?

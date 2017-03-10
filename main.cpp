@@ -1,3 +1,5 @@
+//#define NDEBUG //Speeds up code
+//TODO: add fps count
 #include <stdio.h>
 #include <iostream>
 #include <SDL2/SDL.h>
@@ -5,6 +7,9 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 #include "LTexture.h"
+#include "tinyxml2.h"
+
+using namespace tinyxml2;
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -77,7 +82,7 @@ bool init()
 
 	if(window != NULL) {
 		//screenSurface = SDL_GetWindowSurface(window);
-		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		if(renderer != NULL) {
 			SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 			int imgFlags = IMG_INIT_PNG;

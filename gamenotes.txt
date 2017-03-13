@@ -1,0 +1,53 @@
+if something is declared new then there should be a matching delete
+callbacks????
+differnce between struct and class is public or private members and base class
+
+keep differnt logic seprated from each other
+for example game loop aka even loop should not be intertwind with the render aka gfx
+game class
+gfx class
+what we need 
+SDl 2.0.5
+------------
+
+event loop aka (game loop) goals:
+- handle input dont show cursor sdl_showcursore 
+- update and render 
+- fps limit (60 frames per second)
+- hot reload
+ 
+solution:
+game class
+- init file
+-- init sdl
+-- eventloop()
+--- while(running) -- this loop last 1/60th second or 1000/60th of ms
+     delay loop for 1000/60th of a scond so speed cap
+---- take time from here to so the above minuse the time that has elapsed aka current time - start time
+---- handle input,  sdl pole events - sdl_events escape to exit
+---- update() - move things, check collitions
+---- draw() - aka render to the screen
+---- the time it takes to get here
+-- deconstruct 
+--- SDL_Quit
+
+
+testing the event loop
+- if the event loop is running at 60 fps
+
+ 
+
+load sprite to screen
+- how to draw an image to the screen
+
+solution 
+- create a texture
+- load image to the texture
+- render texture to the screen
+
+
+animate sprite
+- how to move the image 
+
+solution:
+- animation class

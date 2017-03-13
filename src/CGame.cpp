@@ -1,7 +1,7 @@
-#include "CGame.h"
+#include "../header/CGame.h"
 #include <iostream>
 #include <SDL.h>
-#include "CGraphics.h"
+#include "../header/Graphics.h"
 namespace {
 	const char *WINDOW_TITLE = "SDL Tutorial X";
 	const int SCREEN_WIDTH = 640;

@@ -40,7 +40,7 @@ genrate worlds/load maps
 Rich Combinatoric interactions
 Hot Loading
 interact will all objects
-
+distructable terrain
 
 project state space (exploer and lock)
 -------------------

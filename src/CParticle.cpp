@@ -1,4 +1,4 @@
-#include "../header/CParticle.h"
+#include "../headers/CParticle.h"
 
 CParticle::CParticle( int x, int y )
 {

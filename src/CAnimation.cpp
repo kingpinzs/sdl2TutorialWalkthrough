@@ -1,4 +1,4 @@
-#include "../header/CAnimation.h"
+#include "../headers/CAnimation.h"
 
 CAnimation::CAnimation()
 {

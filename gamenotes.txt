@@ -35,10 +35,9 @@ game class
 testing the event loop
 - if the event loop is running at 60 fps
 
- 
-
 load sprite to screen
 - how to draw an image to the screen
+* I need to figure out how to use sdl_textures to load and display a sprite
 
 solution 
 - create a texture

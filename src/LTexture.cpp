@@ -68,7 +68,7 @@ void LTexture::render(int x, int y, SDL_Renderer *renderer, SDL_Rect* clip)
 		renderQuad.h = clip->h;
 	}
 
-	SDL_RenderCopy(renderer, mTexture, NULL, &renderQuad);
+	SDL_RenderCopy(renderer, mTexture, clip, &renderQuad);
 }
 
 int LTexture::getWidth()

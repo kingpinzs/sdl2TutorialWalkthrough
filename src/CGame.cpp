@@ -2,10 +2,13 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "../headers/Graphics.h"
+namespace {
+	const int FPS = 60;
+}
 
 CGame::CGame()
 {
-	CGraphics graphics;
+	SDL_Init(SDL_INIT_VIDEO);
 	eventLoop();
 }
 
@@ -16,8 +19,9 @@ CGame::~CGame()
 
 void CGame::eventLoop()
 {
-	bool QUIT = false;
+	CGraphics graphics;
 	SDL_Event sdlEvent;
+	bool QUIT = false;
 	while (!QUIT) {
 		const int time_start = SDL_GetTicks();
 		while (SDL_PollEvent(&sdlEvent)) {
@@ -34,6 +38,7 @@ void CGame::eventLoop()
 					break;
 			}
 		}
+		graphics.draw();
 		update();
 		draw();
 		const int time_delta = SDL_GetTicks() - time_start;

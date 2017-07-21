@@ -41,12 +41,13 @@ void CGame::eventLoop()
 		graphics.draw();
 		update();
 		draw();
-		const int time_delta = SDL_GetTicks() - time_start;
-		//TODO: Figure out why 10ms gives me 90fps and 60ms gives me 16fps
-		SDL_Delay(10);
-		const float s_p_f = (SDL_GetTicks() - time_start) / 1000.0;
-		const float c_fps = 1 / s_p_f;
-		std::cout << "fps: " << c_fps << "\n";
+		const float time_delta = (SDL_GetTicks() - time_start);
+		const float DELAY_TIME = 1000.0 / 60;
+
+		if(time_delta<DELAY_TIME) {
+			SDL_Delay((int)(DELAY_TIME-time_delta));
+		}
+		std::cout<<1000 / time_delta<<"\n";
 	}
 }
 

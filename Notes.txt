@@ -3,16 +3,23 @@ texture manager
 animation manager
 particle manager
 collition manager
-Event manager
+Event manager -> this also could be a Game manager
 vector class
 input manager
 audio manager
 
 
 game clones to start with
+"Guess the Number!"
+Stopwatch: the game
+tic-tac-toe
+Memory card game
+Blackjack card game
+Spaceship 
 Pong = Simple: input, physics, collision detection, sound; scoring
 Worm = Placement of random powerups, handling of screen boundaries, worm data structure
 Breakout = Lessons of pong, powerups, maps (brick arrangements)
+bubble poper
 Missile Command = targeting; simple enemy ai, movement, and sound
 Space Invaders = simple movement for player and enemy, very similar to breakout with the exception that the enemy constantly moves downward, simple sound
 Asteroids = asteroids (enemies) and player can move in all directions, asteroids appear and move randomly, simple sound

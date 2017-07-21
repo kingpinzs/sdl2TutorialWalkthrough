@@ -25,7 +25,7 @@ CGraphics::CGraphics()
 			0
 			);
 	if (window != NULL) {
-		renderer = SDL_CreateRenderer(window, -1, 0);
+		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		SDL_ShowCursor(SDL_DISABLE);
 		if (renderer != NULL) {
 			SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);

@@ -1,7 +1,9 @@
 #ifndef CANIMATION_H
 #define CANIMATION_H
 
-class CAnimation
+#include "LTexture.h"
+
+class CAnimation : LTexture 
 {
 public:
 	CAnimation();

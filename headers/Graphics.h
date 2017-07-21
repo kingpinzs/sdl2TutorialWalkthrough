@@ -1,8 +1,6 @@
 #pragma once
 #include "LTexture.h"
 
-
-
 struct SDL_Window;
 struct SDL_Renderer;
 

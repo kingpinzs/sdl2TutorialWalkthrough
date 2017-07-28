@@ -44,10 +44,10 @@ void CGame::eventLoop()
 		const float time_delta = (SDL_GetTicks() - time_start);
 		const float DELAY_TIME = 1000.0 / 60;
 
-		if(time_delta<DELAY_TIME) {
+		if(time_delta < DELAY_TIME) {
 			SDL_Delay((int)(DELAY_TIME-time_delta));
 		}
-		std::cout<<1000 / time_delta<<"\n";
+		//std::cout<<1000 / time_delta<<"\n";
 	}
 }
 

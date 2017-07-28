@@ -1,4 +1,5 @@
 #include "../headers/Graphics.h"
+
 namespace {
 	const char *WINDOW_TITLE = "SDL Tutorial X";
 	const int SCREEN_WIDTH = 640;
@@ -13,9 +14,13 @@ CGraphics::CGraphics()
 	 * replace sdl_setvideomode with
 	 * sdl create window  then create sdl create renderer
 	 */
-	
+
 	window = NULL;
 	renderer = NULL;
+	/*
+	 * Possible to create window and render at the same time
+	 * SDL_CreateWindowAndRenderer()
+	 */
 	window = SDL_CreateWindow(
 			WINDOW_TITLE,
 			SDL_WINDOWPOS_UNDEFINED,
@@ -32,6 +37,8 @@ CGraphics::CGraphics()
 			loadMedia();
 		}
 	}
+
+	frame = 0;
 	/*
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(renderer);
@@ -41,14 +48,15 @@ CGraphics::CGraphics()
 
 void CGraphics::draw()
 {
-	clip.h = 32;
-	clip.w = 32;
-	clip.x = 0;
-	clip.y = 0;
 	SDL_RenderClear(renderer);
 	mainTexture.render(0, 0, renderer);
-	spriteTexture.render(60, 60, renderer, &clip);
+	spriteTexture.render(60, 60, renderer, &clip[frame]);
+	dot.render();
 	SDL_RenderPresent(renderer);
+	++frame;
+	if(frame >= 3) {
+		frame =0;
+	}
 }
 
 CGraphics::~CGraphics()
@@ -66,4 +74,20 @@ void CGraphics::loadMedia()
 {
 	mainTexture.loadFromFile("texture.png", renderer);
 	spriteTexture.loadFromFile("MyChar.png", renderer);
+
+	clip[0].h = 32;
+	clip[0].w = 32;
+	clip[0].x = 0;
+	clip[0].y = 0;
+
+	clip[1].h = 32;
+	clip[1].w = 32;
+	clip[1].x = 32;
+	clip[1].y = 0;
+
+	clip[2].h = 32;
+	clip[2].w = 32;
+	clip[2].x = 64;
+	clip[2].y = 0;
+
 }

@@ -1,0 +1,2 @@
+﻿use tiled for the map editor
+Animated tile 
